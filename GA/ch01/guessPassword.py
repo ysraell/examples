@@ -50,7 +50,7 @@ class GuessPassword:
 
 if __name__ == '__main__':
     teste = GuessPassword()
-    teste.test_benchmark()
-
+    #teste.test_benchmark()
+    teste.test_For_I_am_fearfully_and_wonderfully_made()
 
 #EOF

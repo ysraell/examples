@@ -19,8 +19,6 @@ def display(candidate, startTime):
     return result
 
 class OneMaxTests(unittest.TestCase):
-    def test(self, length=100):
-        geneset = [0, 1]
     
     def test_benchmark(self):
         genetic.Benchmark.run(lambda: self.test(4000))
