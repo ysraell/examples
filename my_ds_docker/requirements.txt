@@ -1,0 +1,12 @@
+pandas
+jupyter
+numpy
+Markdown
+matplotlib
+pandas-profiling
+pep8
+scikit-learn
+scipy
+seaborn
+tabulate
+streamlit
