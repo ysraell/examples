@@ -1,0 +1,29 @@
+
+# You could use:
+# Shell:/work: # cat examples/Streamlit_DEMO/config.toml  >~/.streamlit/config.toml
+
+[global]
+
+# Level of logging: 'error', 'warning', 'info', or 'debug'.
+# Default: 'info'
+#logLevel = "debug"
+
+[server]
+# Immediately share the app in such a way that enables live monitoring, and post-run analysis.
+# Default: false
+liveSave = true
+
+# Automatically rerun script when the file is modified on disk.
+# Default: false
+runOnSave = true
+
+# Enables support for Cross-Origin Request Sharing, for added security.
+# Default: true
+enableCORS = false
+
+#[browser]
+
+# Internet address of the server server that the browser should connect to. Can be IP address or DNS name.
+# Default: 'localhost'
+#serverAddress = "*"
+
