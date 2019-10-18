@@ -7,3 +7,6 @@
  - **set_config.sh:** to configure better the Streamlit, working for external access.
  - **Others \*.py:** only experiments.
  - **\*.toml:** config file for Streamlit.
+
+#### To run the prototype:
+`# streamlit run Prototype_Adult_Census_Income_Probability.py`
