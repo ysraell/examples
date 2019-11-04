@@ -25,7 +25,7 @@ data_load_state.text('Loading data...done! (using st.cache)')
 
 #data.loc[:10]
 
-if st.checkbox('Show raw data'):
+if st.sidebar.checkbox('Show raw data'):
     st.subheader('Raw data')
     st.write(data)
 
@@ -38,7 +38,7 @@ st.subheader('Map of all pickups')
 st.map(data)
 
 
-hour_to_filter = st.selectbox(
+hour_to_filter = st.sidebar.selectbox(
     'Which hour of the day?',
      [x for x in range(0,24)])
 

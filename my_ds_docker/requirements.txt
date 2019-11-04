@@ -10,3 +10,12 @@ scipy
 seaborn
 tabulate
 streamlit
+openpyxl
+floweaver
+ipysankeywidget
+cufflinks
+Cython
+tqdm
+modin
+modin[ray]
+ray[debug]

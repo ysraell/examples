@@ -91,7 +91,7 @@ def show_results_random(some_cats):
     p = 100*sum(tg_vals)/n
     s = 100*n/N
     st.write(df_tmp)
-    plot_pie(s)
+    plot_pie(p)
     st.write("P(Rich) = {:.2f}%, with {:,}/{:,} ({:.4f}%) of the entire dataset.".format(p,n,N,s))
     return df_pop
 
