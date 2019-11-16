@@ -1,4 +1,4 @@
-FROM python:buster
+FROM python:3.7-buster
 
 RUN apt-get update && apt-get install -y \
   wget \
@@ -14,8 +14,6 @@ COPY /requirements.txt /requirements.txt
 RUN pip install -r requirements.txt
 
 # For supermarkdown:
-RUN pip install graphviz 
-RUN pip install bs4 
 RUN pip install jupyter_contrib_nbextensions qgrid RISE  
 RUN jupyter contrib nbextension install
 RUN jupyter nbextension enable --py --sys-prefix qgrid
