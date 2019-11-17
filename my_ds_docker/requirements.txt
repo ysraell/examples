@@ -16,6 +16,4 @@ ipysankeywidget
 cufflinks
 Cython
 tqdm
-modin
-modin[ray]
-ray[debug]
+typing_extensions
