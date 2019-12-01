@@ -3,7 +3,7 @@ from __future__ import annotations
 from typing import TypeVar, Iterable, Sequence, Generic, List, Callable, Set, Deque, Dict, Any, Optional
 from typing_extensions import Protocol
 from heapq import heappush, heappop
-from collections import Counter
+from collections import Counter, deque
 
 T = TypeVar('T')
 C = TypeVar('C')
@@ -62,6 +62,42 @@ class Stack(Generic[T]):
     def __repr__(self):
         return repr(self._container)
     
+class Queue(Generic[T]):
+
+    def __init__(self):
+        self._container: Deque[T] = deque()   
+        
+    @property 
+    def empty(self) -> bool:
+        return not self._container
+
+    def push(self, item: T):
+        self._container.append(item)
+
+    def pop(self) -> T:
+        return self._container.popleft() # FIFO
+
+    def __repr__(self):
+        return repr(self._container)
+
+class PriorityQueue(Generic[T]):
+
+    def __init__(self):
+        self._container: List[T] = []   
+        
+    @property 
+    def empty(self) -> bool:
+        return not self._container
+
+    def push(self, item: T):
+        heappush(self._container, item)
+
+    def pop(self) -> T:
+        return heappop(self._container)
+
+    def __repr__(self):
+        return repr(self._container)
+    
 class Node(Generic[T]):
     
     def __init__(self, state: T, parent: Optimal[Node], cost = 0.0, heuristic = 0.0):
@@ -91,6 +127,47 @@ def dfs(initial: T, goal_test: Callable[[T], bool], \
                 continue
             explored.add(child)
             frontier.push(Node(child, current_node))
+    return None
+
+def bfs(initial: T, goal_test: Callable[[T], bool], \
+        successors: Callable[[T], List[T]], check: Callable[[T], None]) -> Optional[Node[T]]:
+    
+    frontier = Queue()
+    frontier.push(Node(initial, None))
+    explored = {initial}
+    
+    while not frontier.empty:
+        current_node = frontier.pop()
+        current_state = current_node.state
+        if goal_test(current_state):
+            return current_node
+        check(current_state)
+        for child in successors(current_state):
+            if child in explored:
+                continue
+            explored.add(child)
+            frontier.push(Node(child, current_node))
+    return None
+
+def astar(initial: T, goal_test: Callable[[T], bool], \
+        successors: Callable[[T], List[T]], check: Callable[[T], None], \
+        heuristic: Callable[[T], None]) -> Optional[Node[T]]:
+    
+    frontier = PriorityQueue()
+    frontier.push(Node(initial, None, 0.0, heuristic(initial)))
+    explored = {initial: 0.0}
+    
+    while not frontier.empty:
+        current_node = frontier.pop()
+        current_state = current_node.state
+        if goal_test(current_state):
+            return current_node
+        check(current_state)
+        for child in successors(current_state):
+            new_cost = current_node.cost + 1
+            if child not in explored or explored[child] > new_cost:
+                explored[child] = new_cost
+                frontier.push(Node(child, current_node, new_cost, heuristic(child)))
     return None
 
 def node2path(node: Node[T]) -> List[T]:
