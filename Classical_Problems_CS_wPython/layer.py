@@ -1,6 +1,6 @@
 
 from __future__ import annotations
-from typing import Lista, Callable, Optional
+from typing import List, Callable, Optional
 from random import random
 from neuron import Neuron
 from util import dot_prod
