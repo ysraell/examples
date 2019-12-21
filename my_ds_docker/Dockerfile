@@ -5,7 +5,8 @@ RUN apt-get update && apt-get install -y \
   htop \
   vim \
   jed \
-  nano
+  nano \
+  dos2unix
 
 RUN pip install -U pip
 

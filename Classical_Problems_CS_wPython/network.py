@@ -18,42 +18,42 @@ class Network:
         self.layers.append(input_layer)
         self.sum_diff = None
         for previous, num_neurons in enumerate(layer_structure[1::]):
-            next_layer = Layer(self.layers[previus], num_neurons, learning_rate, 
+            next_layer = Layer(self.layers[previous], num_neurons, learning_rate, 
                                activate_function, derivative_activate_function)
             self.layers.append(next_layer)
         
-        def outputs(self, input_: List[float]) -> List[float]:
-            return reduce(lambda inputs, layer: layer.outputs(inputs), self.layers, input_)
-        
-        def backpropagation(self, expected: List[float]):
-            last_layer = len(self.layers)-1
-            self.layers[last_layer].calculate_deltas_for_output_layer(expected)
-            for l in range(last_layer-1, 0, -1):
-                self.layers[l].calculate_deltas_for_hidden_layer(self.layers[l+1])
-                
-        def update_weights(self):
-            diff_list = []
-            for layer in self.layers[1:]:
-                for neuron in layer.neurons:
-                    for w in range(len(neuron.weights)):
-                        diff = neuron.learning_rate*layer.previous_layer.output_cache[w]*neuron.delta
-                        neuron.weights[w] = neuron.weights[w] + diff
-                        diff_list.append(abs(diff))
-            self.sum_diff = sum(diff_list)
+    def outputs(self, input_: List[float]) -> List[float]:
+        return reduce(lambda inputs, layer: layer.outputs(inputs), self.layers, input_)
 
-        def train(self, inputs: List[List[float]], expecteds: List[List[float]]):
-            for location, xs in enumerate(inputs):
-                ys = expecteds[location]
-                outs = self.outputs(xs)
-                self.backpropagete(ys)
-                self.update_weights()
-                
-        def validate(self, inputs: List[List[float]], expecteds: List[List[float]],
-                    interpret_output: Callable[[float], T]) -> Tuple[int, int, float]:
-            correct = 0
-            for input_, expected in zip(inputs, expecteds):
-                result: T = interpret_output(self.outputs(input_))
-                if result == expected:
-                    correct += 1
-            percentagem = correct / len(inputs)
-            return correct, len(inputs), percentagem
+    def backpropagate(self, expected: List[float]):
+        last_layer = len(self.layers)-1
+        self.layers[last_layer].calculate_deltas_for_output_layer(expected)
+        for l in range(last_layer-1, 0, -1):
+            self.layers[l].calulate_deltas_for_hidden_layer(self.layers[l+1])
+
+    def update_weights(self):
+        diff_list = []
+        for layer in self.layers[1:]:
+            for neuron in layer.neurons:
+                for w in range(len(neuron.weights)):
+                    diff = neuron.learning_rate*layer.previous_layer.output_cache[w]*neuron.delta
+                    neuron.weights[w] = neuron.weights[w] + diff
+                    diff_list.append(abs(diff))
+        self.sum_diff = sum(diff_list)
+
+    def train(self, inputs: List[List[float]], expecteds: List[List[float]]):
+        for location, xs in enumerate(inputs):
+            ys = expecteds[location]
+            outs = self.outputs(xs)
+            self.backpropagate(ys)
+            self.update_weights()
+
+    def validate(self, inputs: List[List[float]], expecteds: List[List[float]],
+                interpret_output: Callable[[float], T]) -> Tuple[int, int, float]:
+        correct = 0
+        for input_, expected in zip(inputs, expecteds):
+            result: T = interpret_output(self.outputs(input_))
+            if result == expected:
+                correct += 1
+        percentagem = correct / len(inputs)
+        return correct, len(inputs), percentagem
