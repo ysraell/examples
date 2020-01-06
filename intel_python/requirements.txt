@@ -1,0 +1,16 @@
+pandas
+jupyter
+Markdown
+matplotlib
+pandas-profiling
+pep8
+scikit-learn
+scikit-surprise
+scipy
+seaborn
+tabulate
+ipysankeywidget
+cufflinks
+Cython
+tqdm
+typing_extensions
