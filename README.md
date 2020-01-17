@@ -8,3 +8,6 @@ Essential Techniques for Practicing Programmers](https://classicproblems.com/).
 - *OficinaML11*: presentation about random forest.
 - *python_tips*: some tips for pythoning.
 - *my_ds_docker*: My Data Science Docker Image (not professional, only for use with these examples).
+
+### TODO:
+- Check module python [colorama](https://towardsdatascience.com/3-python-libraries-you-cant-miss-in-2020-2ee4a7277cf1)

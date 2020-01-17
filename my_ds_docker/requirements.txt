@@ -19,3 +19,4 @@ tqdm
 typing_extensions
 surprise
 matplotlib_venn
+colorama

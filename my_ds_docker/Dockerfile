@@ -31,3 +31,4 @@ EXPOSE 8888 8501
 
 CMD ["/servers.sh"]
 
+#EOF
