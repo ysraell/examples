@@ -51,13 +51,6 @@ option = st.selectbox(
 
 'You selected: ', option
 
-st.title('Side bar / Select box.')
-option = st.sidebar.selectbox(
-    'Which number do you like best?',
-     df['first column'])
-
-'You selected:', option
-
 st.title('Check time with side bar.')
 'Wait user start the process...'
 if st.sidebar.checkbox('Start long computation.'):
