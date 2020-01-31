@@ -1,5 +1,6 @@
 pandas
 jupyter
+jupyterlab
 numpy
 Markdown
 matplotlib
@@ -9,7 +10,6 @@ scikit-learn
 scipy
 seaborn
 tabulate
-streamlit
 openpyxl
 floweaver
 ipysankeywidget
@@ -20,3 +20,4 @@ typing_extensions
 surprise
 matplotlib_venn
 colorama
+torch

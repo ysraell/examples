@@ -20,6 +20,10 @@ RUN jupyter contrib nbextension install
 RUN jupyter nbextension enable --py --sys-prefix qgrid
 RUN jupyter-nbextension install rise --py --sys-prefix
 RUN jupyter-nbextension enable rise --py --sys-prefix
+RUN jupyter serverextension enable --py jupyterlab --sys-prefix
+
+RUN pip install python-dateutil==2.8.0
+RUN pip install streamlit
 
 RUN mkdir /work
 
