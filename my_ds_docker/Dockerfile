@@ -6,7 +6,9 @@ RUN apt-get update && apt-get install -y \
   vim \
   jed \
   nano \
-  dos2unix
+  dos2unix \
+  nodejs \
+  npm
 
 RUN pip install -U pip
 
@@ -21,6 +23,10 @@ RUN jupyter nbextension enable --py --sys-prefix qgrid
 RUN jupyter-nbextension install rise --py --sys-prefix
 RUN jupyter-nbextension enable rise --py --sys-prefix
 RUN jupyter serverextension enable --py jupyterlab --sys-prefix
+RUN jupyter nbextension install --py jupytemplate --sys-prefix
+RUN jupyter nbextension enable jupytemplate/main --sys-prefix
+RUN jupyter labextension install jupyterlab_templates
+RUN jupyter serverextension enable --py jupyterlab_templates
 
 RUN pip install python-dateutil==2.8.0
 RUN pip install streamlit

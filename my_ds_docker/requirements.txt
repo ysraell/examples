@@ -1,6 +1,5 @@
 pandas
 jupyter
-jupyterlab
 numpy
 Markdown
 matplotlib
@@ -21,3 +20,9 @@ surprise
 matplotlib_venn
 colorama
 torch
+keras
+tensorflow
+seq2seq-lstm
+jupytemplate
+jupyterlab_templates
+PrettyTable
