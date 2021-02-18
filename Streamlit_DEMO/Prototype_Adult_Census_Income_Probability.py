@@ -5,6 +5,8 @@ import pandas as pd
 import random
 import matplotlib.pyplot as plt
 
+st.set_option('deprecation.showPyplotGlobalUse', False)
+
 @st.cache
 def load_data():
     return pd.read_csv('Adult_Census_Income.csv')
