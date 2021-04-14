@@ -1,11 +1,11 @@
-import numpy as np
 import matplotlib.pyplot as plt
+import numpy as np
+
 # import pandas as pd
 import scipy.stats as scs
+from stats import ab_dist, confidence_interval, p_val, pooled_SE, z_val
 
-from stats import pooled_SE, confidence_interval, ab_dist, p_val, z_val
-
-plt.style.use('ggplot')
+plt.style.use("ggplot")
 
 
 def plot_norm_dist(ax, mu, std, with_CI=False, sig_level=0.05, label=None):
@@ -44,12 +44,12 @@ def plot_binom_dist(ax, n, p, label=None):
     Returns:
         None: the function adds a plot to the axes object provided
     """
-    x = np.linspace(0, n, n+1)
+    x = np.linspace(0, n, n + 1)
     y = scs.binom(n, p).pmf(x)
     ax.plot(x, y, label=label)
 
 
-def plot_CI(ax, mu, s, sig_level=0.05, color='grey'):
+def plot_CI(ax, mu, s, sig_level=0.05, color="grey"):
     """Calculates the two-tailed confidence interval and adds the plot to
     an axes object.
 
@@ -64,10 +64,9 @@ def plot_CI(ax, mu, s, sig_level=0.05, color='grey'):
     Returns:
         None: the function adds a plot to the axes object provided
     """
-    left, right = confidence_interval(sample_mean=mu, sample_std=s,
-                                      sig_level=sig_level)
-    ax.axvline(left, c=color, linestyle='--', alpha=0.5)
-    ax.axvline(right, c=color, linestyle='--', alpha=0.5)
+    left, right = confidence_interval(sample_mean=mu, sample_std=s, sig_level=sig_level)
+    ax.axvline(left, c=color, linestyle="--", alpha=0.5)
+    ax.axvline(right, c=color, linestyle="--", alpha=0.5)
 
 
 def plot_null(ax, stderr):
@@ -112,9 +111,18 @@ def plot_alt(ax, stderr, d_hat):
     plot_norm_dist(ax, d_hat, stderr, label="Alternative")
 
 
-def abplot(N_A, N_B, bcr, d_hat, sig_level=0.05, show_power=False,
-           show_alpha=False, show_beta=False, show_p_value=False,
-           show_legend=True):
+def abplot(
+    N_A,
+    N_B,
+    bcr,
+    d_hat,
+    sig_level=0.05,
+    show_power=False,
+    show_alpha=False,
+    show_beta=False,
+    show_p_value=False,
+    show_legend=True,
+):
     """Example plot of AB test
 
     Example:
@@ -149,68 +157,89 @@ def abplot(N_A, N_B, bcr, d_hat, sig_level=0.05, show_power=False,
 
     # shade areas according to user input
     if show_power:
-        show_area(ax, d_hat, stderr, sig_level, area_type='power')
+        show_area(ax, d_hat, stderr, sig_level, area_type="power")
     if show_alpha:
-        show_area(ax, d_hat, stderr, sig_level, area_type='alpha')
+        show_area(ax, d_hat, stderr, sig_level, area_type="alpha")
     if show_beta:
-        show_area(ax, d_hat, stderr, sig_level, area_type='beta')
+        show_area(ax, d_hat, stderr, sig_level, area_type="beta")
 
     # show p_value based on the binomial distributions for the two groups
     if show_p_value:
-        null = ab_dist(stderr, 'control')
-        p_value = p_val(N_A, N_B, bcr, bcr+d_hat)
-        ax.text(3 * stderr, null.pdf(0),
-                'p-value = {0:.3f}'.format(p_value),
-                fontsize=12, ha='left')
+        null = ab_dist(stderr, "control")
+        p_value = p_val(N_A, N_B, bcr, bcr + d_hat)
+        ax.text(
+            3 * stderr,
+            null.pdf(0),
+            "p-value = {0:.3f}".format(p_value),
+            fontsize=12,
+            ha="left",
+        )
 
     # option to show legend
     if show_legend:
         plt.legend()
 
-    plt.xlabel('d')
-    plt.ylabel('PDF')
+    plt.xlabel("d")
+    plt.ylabel("PDF")
     plt.show()
 
 
-def show_area(ax, d_hat, stderr, sig_level, area_type='power'):
+def show_area(ax, d_hat, stderr, sig_level, area_type="power"):
     """Fill between upper significance boundary and distribution for
     alternative hypothesis
     """
-    left, right = confidence_interval(sample_mean=0, sample_std=stderr,
-                                      sig_level=sig_level)
+    left, right = confidence_interval(
+        sample_mean=0, sample_std=stderr, sig_level=sig_level
+    )
     x = np.linspace(-12 * stderr, 12 * stderr, 1000)
-    null = ab_dist(stderr, 'control')
-    alternative = ab_dist(stderr, d_hat, 'test')
+    null = ab_dist(stderr, "control")
+    alternative = ab_dist(stderr, d_hat, "test")
 
     # if area_type is power
     # Fill between upper significance boundary and distribution for alternative
     # hypothesis
-    if area_type == 'power':
-        ax.fill_between(x, 0, alternative.pdf(x), color='green', alpha=0.25,
-                        where=(x > right))
-        ax.text(-3 * stderr, null.pdf(0),
-                'power = {0:.3f}'.format(1 - alternative.cdf(right)),
-                fontsize=12, ha='right', color='k')
+    if area_type == "power":
+        ax.fill_between(
+            x, 0, alternative.pdf(x), color="green", alpha=0.25, where=(x > right)
+        )
+        ax.text(
+            -3 * stderr,
+            null.pdf(0),
+            "power = {0:.3f}".format(1 - alternative.cdf(right)),
+            fontsize=12,
+            ha="right",
+            color="k",
+        )
 
     # if area_type is alpha
     # Fill between upper significance boundary and distribution for null
     # hypothesis
-    if area_type == 'alpha':
-        ax.fill_between(x, 0, null.pdf(x), color='green', alpha=0.25,
-                        where=(x > right))
-        ax.text(-3 * stderr, null.pdf(0),
-                'alpha = {0:.3f}'.format(1 - null.cdf(right)),
-                fontsize=12, ha='right', color='k')
+    if area_type == "alpha":
+        ax.fill_between(x, 0, null.pdf(x), color="green", alpha=0.25, where=(x > right))
+        ax.text(
+            -3 * stderr,
+            null.pdf(0),
+            "alpha = {0:.3f}".format(1 - null.cdf(right)),
+            fontsize=12,
+            ha="right",
+            color="k",
+        )
 
     # if area_type is beta
     # Fill between distribution for alternative hypothesis and upper
     # significance boundary
-    if area_type == 'beta':
-        ax.fill_between(x, 0, alternative.pdf(x), color='green', alpha=0.25,
-                        where=(x < right))
-        ax.text(-3 * stderr, null.pdf(0),
-                'beta = {0:.3f}'.format(alternative.cdf(right)),
-                fontsize=12, ha='right', color='k')
+    if area_type == "beta":
+        ax.fill_between(
+            x, 0, alternative.pdf(x), color="green", alpha=0.25, where=(x < right)
+        )
+        ax.text(
+            -3 * stderr,
+            null.pdf(0),
+            "beta = {0:.3f}".format(alternative.cdf(right)),
+            fontsize=12,
+            ha="right",
+            color="k",
+        )
 
 
 def zplot(area=0.95, two_tailed=True, align_right=False):
@@ -246,42 +275,68 @@ def zplot(area=0.95, two_tailed=True, align_right=False):
     if two_tailed:
         left = norm.ppf(0.5 - area / 2)
         right = norm.ppf(0.5 + area / 2)
-        ax.vlines(right, 0, norm.pdf(right), color='grey', linestyle='--')
-        ax.vlines(left, 0, norm.pdf(left), color='grey', linestyle='--')
+        ax.vlines(right, 0, norm.pdf(right), color="grey", linestyle="--")
+        ax.vlines(left, 0, norm.pdf(left), color="grey", linestyle="--")
 
-        ax.fill_between(x, 0, y, color='grey', alpha=0.25,
-                        where=(x > left) & (x < right))
-        plt.xlabel('z')
-        plt.ylabel('PDF')
-        plt.text(left, norm.pdf(left), "z = {0:.3f}".format(left), fontsize=12,
-                 rotation=90, va="bottom", ha="right")
-        plt.text(right, norm.pdf(right), "z = {0:.3f}".format(right),
-                 fontsize=12, rotation=90, va="bottom", ha="left")
+        ax.fill_between(
+            x, 0, y, color="grey", alpha=0.25, where=(x > left) & (x < right)
+        )
+        plt.xlabel("z")
+        plt.ylabel("PDF")
+        plt.text(
+            left,
+            norm.pdf(left),
+            "z = {0:.3f}".format(left),
+            fontsize=12,
+            rotation=90,
+            va="bottom",
+            ha="right",
+        )
+        plt.text(
+            right,
+            norm.pdf(right),
+            "z = {0:.3f}".format(right),
+            fontsize=12,
+            rotation=90,
+            va="bottom",
+            ha="left",
+        )
     # for one-tailed tests
     else:
         # align the area to the right
         if align_right:
-            left = norm.ppf(1-area)
-            ax.vlines(left, 0, norm.pdf(left), color='grey', linestyle='--')
-            ax.fill_between(x, 0, y, color='grey', alpha=0.25,
-                            where=x > left)
-            plt.text(left, norm.pdf(left), "z = {0:.3f}".format(left),
-                     fontsize=12, rotation=90, va="bottom", ha="right")
+            left = norm.ppf(1 - area)
+            ax.vlines(left, 0, norm.pdf(left), color="grey", linestyle="--")
+            ax.fill_between(x, 0, y, color="grey", alpha=0.25, where=x > left)
+            plt.text(
+                left,
+                norm.pdf(left),
+                "z = {0:.3f}".format(left),
+                fontsize=12,
+                rotation=90,
+                va="bottom",
+                ha="right",
+            )
         # align the area to the left
         else:
             right = norm.ppf(area)
-            ax.vlines(right, 0, norm.pdf(right), color='grey', linestyle='--')
-            ax.fill_between(x, 0, y, color='grey', alpha=0.25,
-                            where=x < right)
-            plt.text(right, norm.pdf(right), "z = {0:.3f}".format(right),
-                     fontsize=12, rotation=90, va="bottom", ha="left")
+            ax.vlines(right, 0, norm.pdf(right), color="grey", linestyle="--")
+            ax.fill_between(x, 0, y, color="grey", alpha=0.25, where=x < right)
+            plt.text(
+                right,
+                norm.pdf(right),
+                "z = {0:.3f}".format(right),
+                fontsize=12,
+                rotation=90,
+                va="bottom",
+                ha="left",
+            )
 
     # annotate the shaded area
-    plt.text(0, 0.1, "shaded area = {0:.3f}".format(area), fontsize=12,
-             ha='center')
+    plt.text(0, 0.1, "shaded area = {0:.3f}".format(area), fontsize=12, ha="center")
     # axis labels
-    plt.xlabel('z')
-    plt.ylabel('PDF')
+    plt.xlabel("z")
+    plt.ylabel("PDF")
 
     plt.show()
 
@@ -321,7 +376,7 @@ def abplot_CI_bars(N, X, sig_level=0.05, dmin=None):
     SE = np.array(SE)
     d = np.array(d)
 
-    y = np.arange(len(N)-1)
+    y = np.arange(len(N) - 1)
 
     # get z value
     z = z_val(sig_level)
@@ -329,23 +384,23 @@ def abplot_CI_bars(N, X, sig_level=0.05, dmin=None):
     ci = SE * z
 
     # bar to represent the confidence interval
-    ax.hlines(y, d-ci, d+ci, color='blue', alpha=0.35, lw=10, zorder=1)
+    ax.hlines(y, d - ci, d + ci, color="blue", alpha=0.35, lw=10, zorder=1)
     # marker for the mean
-    ax.scatter(d, y, s=300, marker='|', lw=10, color='magenta', zorder=2)
+    ax.scatter(d, y, s=300, marker="|", lw=10, color="magenta", zorder=2)
 
     # vertical line to represent 0
-    ax.axvline(0, c='grey', linestyle='-')
+    ax.axvline(0, c="grey", linestyle="-")
 
     # plot veritcal dashed lines if dmin is provided
     if dmin is not None:
-        ax.axvline(-dmin, c='red', linestyle='--', alpha=0.75)
-        ax.axvline(dmin, c='green', linestyle='--', alpha=0.75)
+        ax.axvline(-dmin, c="red", linestyle="--", alpha=0.75)
+        ax.axvline(dmin, c="green", linestyle="--", alpha=0.75)
 
     # invert y axis to show variant 1 at the top
     ax.invert_yaxis()
     # label variants on y axis
-    labels = ['variant{}'.format(idx+1) for idx in range(len(N)-1)]
-    plt.yticks(np.arange(len(N)-1), labels)
+    labels = ["variant{}".format(idx + 1) for idx in range(len(N) - 1)]
+    plt.yticks(np.arange(len(N) - 1), labels)
 
 
 def funnel_CI_plot(A, B, sig_level=0.05):
@@ -388,15 +443,15 @@ def funnel_CI_plot(A, B, sig_level=0.05):
     ci = SE * z
 
     # bar to represent the confidence interval
-    ax.hlines(y, d-ci, d+ci, color='blue', alpha=0.35, lw=10, zorder=1)
+    ax.hlines(y, d - ci, d + ci, color="blue", alpha=0.35, lw=10, zorder=1)
     # marker for the mean
-    ax.scatter(d, y, s=300, marker='|', lw=10, color='magenta', zorder=2)
+    ax.scatter(d, y, s=300, marker="|", lw=10, color="magenta", zorder=2)
 
     # vertical line to represent 0
-    ax.axvline(0, c='grey', linestyle='-')
+    ax.axvline(0, c="grey", linestyle="-")
 
     # invert y axis to show variant 1 at the top
     ax.invert_yaxis()
     # label variants on y axis
-    labels = ['metric{}'.format(idx+1) for idx in range(len(A))]
+    labels = ["metric{}".format(idx + 1) for idx in range(len(A))]
     plt.yticks(np.arange(len(A)), labels)

@@ -1,17 +1,17 @@
-
-
-import genetic
 import datetime
 import random
 
+import genetic
+
+
 def get_fitness(guess, target):
-    return sum(1 for expected, actual in zip(target, guess)
-               if expected == actual)
+    return sum(1 for expected, actual in zip(target, guess) if expected == actual)
+
 
 def display(candidate, startTime):
     timeDiff = datetime.datetime.now() - startTime
-    print("{}\t{}\t{}".format(
-        candidate.Genes, candidate.Fitness, timeDiff))
+    print("{}\t{}\t{}".format(candidate.Genes, candidate.Fitness, timeDiff))
+
 
 class GuessPassword:
     geneset = " abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!.,"
@@ -26,8 +26,7 @@ class GuessPassword:
 
     def test_Random(self):
         length = 150
-        target = ''.join(random.choice(self.geneset)
-                         for _ in range(length))
+        target = "".join(random.choice(self.geneset) for _ in range(length))
 
         self.guess_password(target)
 
@@ -44,13 +43,14 @@ class GuessPassword:
             display(candidate, startTime)
 
         optimalFitness = len(target)
-        return genetic.get_best(fnGetFitness, len(target), optimalFitness,
-                                self.geneset, fnDisplay)
+        return genetic.get_best(
+            fnGetFitness, len(target), optimalFitness, self.geneset, fnDisplay
+        )
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     teste = GuessPassword()
-    #teste.test_benchmark()
+    # teste.test_benchmark()
     teste.test_For_I_am_fearfully_and_wonderfully_made()
 
-#EOF
+# EOF

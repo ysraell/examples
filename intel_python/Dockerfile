@@ -39,11 +39,11 @@ RUN apt-get update && apt-get install -y \
 COPY /requirements.txt /requirements.txt
 
 RUN conda config --add channels conda-forge
-RUN conda config --add channels bioconda 
+RUN conda config --add channels bioconda
 RUN conda install --file requirements.txt
 
 # For supermarkdown:
-RUN conda install jupyter_contrib_nbextensions qgrid RISE  
+RUN conda install jupyter_contrib_nbextensions qgrid RISE
 RUN jupyter contrib nbextension install
 RUN jupyter nbextension enable --py --sys-prefix qgrid
 RUN jupyter-nbextension install rise --py --sys-prefix

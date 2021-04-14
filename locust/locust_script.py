@@ -1,15 +1,15 @@
-
 import time
-from locust import HttpUser, task, between
+
+from locust import HttpUser, between, task
+
 
 class QuickstartUser(HttpUser):
     wait_time = between(1, 2)
 
     @task
     def day_to_hour(self):
-        self.client.get('/dh/5')
+        self.client.get("/dh/5")
 
     @task
     def day_to_minute(self):
-        self.client.get('/dm/2')
-        
+        self.client.get("/dm/2")

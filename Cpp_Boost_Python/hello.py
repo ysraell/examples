@@ -1,5 +1,5 @@
 # Copyright 2018 Sahaj Software Solutions, Inc.
-# 
+#
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
 # You may obtain a copy of the License at
@@ -13,4 +13,5 @@
 # limitations under the License.
 
 import hello
+
 print(hello.greet(20))

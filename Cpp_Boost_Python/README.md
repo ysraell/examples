@@ -7,7 +7,7 @@ $ mv eigen-3.3.7 /usr/local/
 $ apt-get update && apt-get install -y \
     curl libboost-python-dev libboost-dev \
     build-essential zlib1g-dev libboost-system-dev \
-    libboost-program-options-dev 
+    libboost-program-options-dev
 ```
 
 **WIP**.

@@ -1,10 +1,10 @@
-import scipy.stats as scs
 import pandas as pd
+import scipy.stats as scs
+
 # import numpy as np
 
 
-def generate_data(N_A, N_B, p_A, p_B, days=None, control_label='A',
-                  test_label='B'):
+def generate_data(N_A, N_B, p_A, p_B, days=None, control_label="A", test_label="B"):
     """Returns a pandas dataframe with fake CTR data
 
     Example:
@@ -45,17 +45,17 @@ def generate_data(N_A, N_B, p_A, p_B, days=None, control_label='A',
         # for 'ts' column
         if days is not None:
             if type(days) == int:
-                row['ts'] = idx // (N // days)
+                row["ts"] = idx // (N // days)
             else:
                 raise ValueError("Provide an integer for the days parameter.")
         # assign group based on 50/50 probability
-        row['group'] = group_bern.rvs()
+        row["group"] = group_bern.rvs()
 
-        if row['group'] == 0:
+        if row["group"] == 0:
             # assign conversion based on provided parameters
-            row['converted'] = A_bern.rvs()
+            row["converted"] = A_bern.rvs()
         else:
-            row['converted'] = B_bern.rvs()
+            row["converted"] = B_bern.rvs()
         # collect row into data container
         data.append(row)
 
@@ -63,7 +63,6 @@ def generate_data(N_A, N_B, p_A, p_B, days=None, control_label='A',
     df = pd.DataFrame(data)
 
     # transform group labels of 0s and 1s to user-defined group labels
-    df['group'] = df['group'].apply(
-        lambda x: control_label if x == 0 else test_label)
+    df["group"] = df["group"].apply(lambda x: control_label if x == 0 else test_label)
 
     return df
