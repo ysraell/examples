@@ -1,0 +1,8 @@
+
+
+# Gera um arquivo texto PDFs.md5 com o md5sum de todos os arquivos resuntantes do find
+echo 'md5sum file_path' > PDFs.md5
+for a in `find . |grep -v PDFs.md5`; do echo $a ; echo `md5sum $a`|sed -e 's/\.\///g' >>PDFs.md5; done
+
+# como carregar esse arquivo com pandas?
+df_tmp = pd.read_csv('PDFs.md5', sep=' ')

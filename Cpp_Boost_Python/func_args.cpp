@@ -10,4 +10,3 @@ BOOST_PYTHON_MODULE(func_args)
 {
     def("foo", foo, args("x", "y"), "foo's docstring");
 }
-

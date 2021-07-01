@@ -13,5 +13,3 @@ BOOST_PYTHON_MODULE(numpypp)
 {
     def("aaa", aaa, args("x", "y"), "foo's docstring");
 }
-
-

@@ -8,4 +8,3 @@ echo 'Wait 5 seconds for Jupyter Notebook access...'
 sleep 5
 docker exec -it `docker ps |grep ${image_name}|cut -d ' ' -f 1`  jupyter notebook list
 #echo -e '\nYou can now view your Streamlit app in your browser. \n\nLocal URL: http://localhost:8501\n'
-
