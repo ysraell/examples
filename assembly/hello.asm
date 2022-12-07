@@ -1,6 +1,8 @@
 global _start
+
 section .data
 message: db 'hello, world!', 10
+
 section .text
 _start:
     mov rax, 1              ; system call number sould be stored in rax
@@ -9,4 +11,6 @@ _start:
     mov rdx, 14             ; argument #3 in rdx: how many bytes to write?
     syscall
 
-;EOF
+    mov rax, 60             ; 'exit' syscall number
+    xor rdi, rdi
+    syscall
