@@ -2,7 +2,7 @@
 
 Ref.: Murphy, K. P. (2012). Machine learning: a probabilistic perspective. MIT press.
 
-For cite with BibTex:
+For cite with `bibtex`:
 ```bibtex
 @book{murphy2012machine,
   title={Machine learning: a probabilistic perspective},
